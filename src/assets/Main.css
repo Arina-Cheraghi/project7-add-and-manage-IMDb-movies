@@ -11,14 +11,36 @@
 .box {
   color: #ebd3f8;
   background-color: #2e073f;
-  width: 42rem;
-  max-width: 42rem;
+  width: 25%;
   border-radius: 0.9rem;
   overflow: hidden;
   position: relative;
   display: flex;
   flex-direction: column;
   flex: 1;
+}
+
+@media only screen and (max-width: 1100px) {
+  .main {
+    flex-wrap: wrap;
+    width: 90%;
+  }
+  .box {
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .main {
+    width: 90%;
+    flex-direction: column;
+    height: auto;
+  }
+  .box {
+    min-height: 20rem !important;
+    max-height: 20rem !important;
+    width: 100%;
+  }
 }
 
 .list {

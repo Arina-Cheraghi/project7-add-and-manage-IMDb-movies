@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../assets/Main.css"
 
 function MovieList({movies, onSelectMovie}) {
+
+  // ذخیره فیلم‌ها در localStorage هر زمان که تغییر می‌کنند
+  useEffect(() => {
+    localStorage.setItem('movies', JSON.stringify(movies));
+  }, [movies]);
 
   return (
     <ul className="list">

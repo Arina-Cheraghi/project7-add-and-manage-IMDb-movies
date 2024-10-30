@@ -6,7 +6,11 @@ import Loader from "./Loader";
 function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
   const [movie, setMovie] = useState({});
   const [loading, setLoading] = useState(false);
-  const [userRating, setUserRating] = useState(0);
+  const [userRating, setUserRating] = useState(() => {
+    const ratings = JSON.parse(localStorage.getItem('userRatings') || '{}');
+    return ratings[selectedId] || 0;
+  });
+
   const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
   const watchedUserRating = watched.find(
     (movie) => movie.imdbID === selectedId
@@ -28,13 +32,29 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
   useEffect(
     function () {
       async function getMovieDetails() {
-        setLoading(true);
-        const res = await fetch(
-          `http://www.omdbapi.com/?i=${selectedId}&apikey=58765773`
-        );
-        const data = await res.json();
-        setMovie(data);
-        setLoading(false);
+        try {
+          setLoading(true);
+          
+          const cachedMovie = localStorage.getItem(`movie-${selectedId}`);
+          if (cachedMovie) {
+            setMovie(JSON.parse(cachedMovie));
+            setLoading(false);
+            return;
+          }
+
+          const res = await fetch(
+            `http://www.omdbapi.com/?i=${selectedId}&apikey=58765773`
+          );
+          const data = await res.json();
+          setMovie(data);
+          
+          localStorage.setItem(`movie-${selectedId}`, JSON.stringify(data));
+          
+        } catch (err) {
+          console.error(err);
+        } finally {
+          setLoading(false);
+        }
       }
       getMovieDetails();
     },
@@ -52,6 +72,16 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
     [title]
   );
 
+  useEffect(() => {
+    const ratings = JSON.parse(localStorage.getItem('userRatings') || '{}');
+    if (userRating > 0) {
+      localStorage.setItem(
+        'userRatings', 
+        JSON.stringify({ ...ratings, [selectedId]: userRating })
+      );
+    }
+  }, [userRating, selectedId]);
+
   function handleAdd() {
     const newWatchedMovie = {
       imdbID: selectedId,
@@ -63,6 +93,11 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
       userRating,
     };
     onAddWatched(newWatchedMovie);
+
+    const ratings = JSON.parse(localStorage.getItem('userRatings') || '{}');
+    delete ratings[selectedId];
+    localStorage.setItem('userRatings', JSON.stringify(ratings));
+    
     onCloseMovie();
   }
 
