@@ -1,0 +1,101 @@
+.w-list {
+  overflow-y: auto;
+}
+.w-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.w-list::-webkit-scrollbar-track {
+  background-color: #2e073f;
+  border-radius: 4px;
+}
+
+.w-list::-webkit-scrollbar-thumb {
+  background-color: #ad49e1;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.w-list::-webkit-scrollbar-thumb:hover {
+  background-color: #ebd3f8;
+}
+
+.w-list li {
+  width: 95%;
+  margin: 0.8rem auto;
+  position: relative;
+  display: flex;
+  gap: 2rem;
+  background-color: #421c5666;
+  padding: 0.5rem;
+  border-radius: 0.8rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.w-list li * {
+  display: flex;
+  align-items: center;
+}
+.w-list-info {
+  flex-direction: column;
+  width: 70%;
+  justify-content: space-evenly;
+  align-items: flex-end;
+}
+
+.w-list-info * {
+  width: 100%;
+  text-align: left;
+}
+
+.w-list img {
+  width: 3rem;
+  border-radius: 0.4rem;
+}
+
+.w-list h3 {
+  text-align: left;
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  text-align: center;
+  color: #fff;
+}
+
+.w-list-rating {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.w-list p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+}
+
+.w-list span {
+  font-size: 0.8rem;
+  color: #aaa;
+  display: flex;
+  justify-content: center;
+  font-weight: 400  ;
+}
+
+.btn-delete{
+  position: absolute;
+  right: 1rem;
+  padding: 0.1rem .4rem;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 100%;
+  top: 35%;
+  background-color: #ff52f698;
+  color: #000000;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-delete:hover{
+  background-color: #ff52f6;
+}
