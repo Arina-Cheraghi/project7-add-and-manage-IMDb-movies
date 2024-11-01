@@ -34,7 +34,6 @@ function App() {
     return stored ? JSON.parse(stored) : null;
   });
   
-  // استفاده از localStorage برای watched movies
   const [watched, setWatched] = useLocalStorageState([], "watched");
 
   useEffect(() => {
@@ -66,7 +65,7 @@ function App() {
         setError("");
         
         const res = await fetch(
-          `http://www.omdbapi.com/?apikey=8de2af02&s=${query}`,
+          `https://www.omdbapi.com/?apikey=8de2af02&s=${query}`,
           { signal: controller.signal }
         );
 
@@ -79,7 +78,6 @@ function App() {
         setError("");
       } catch (err) {
         if (err.name === "AbortError") {
-          // Ignore abort errors
           return;
         }
         
